@@ -1,0 +1,2 @@
+{% extends "base.html" %}{% block body %}<h1>My orders</h1>{% if not orders %}<div class="card">No orders yet.</div>{% else %}
+<table><tr><th>Order</th><th>Date</th><th>Total</th><th>Status</th></tr>{% for o in orders %}<tr><td><a href="{{ url_for('order', order_id=o.id) }}">#{{ o.id }}</a></td><td>{{ o.created_at }}</td><td>₹{{ o.total }}</td><td>{{ o.status }}</td></tr>{% endfor %}</table>{% endif %}{% endblock %}

@@ -1,0 +1,7 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FreshKart - Online Grocery</title><link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head><body>
+<nav><a class="brand" href="{{ url_for('index') }}">🛒 FreshKart</a><a href="{{ url_for('index') }}">Shop</a>
+<a href="{{ url_for('cart') }}">Cart ({{ cart_count }})</a><a href="{{ url_for('orders') }}">My Orders</a><a href="{{ url_for('admin_orders') }}">Store Staff (demo)</a></nav>
+<main>{% for cat, msg in get_flashed_messages(with_categories=true) %}<div class="flash {{ cat }}">{{ msg }}</div>{% endfor %}
+{% block body %}{% endblock %}</main>
+<footer>Demo project for Agile Software Development. Payment and delivery tracking are <b>SIMULATED</b> - no real money or GPS.</footer></body></html>

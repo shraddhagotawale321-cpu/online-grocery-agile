@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block body %}
+<h1>Fresh groceries, delivered</h1>
+<form class="bar" method="get"><input name="q" value="{{ q }}" placeholder="Search products (e.g. milk)" size="30">
+<select name="category"><option value="">All categories</option>{% for c in cats %}<option {{ 'selected' if c==cat }}>{{ c }}</option>{% endfor %}</select>
+<button class="btn">Search</button>{% if q or cat %}<a class="btn sec" href="{{ url_for('index') }}">Clear</a>{% endif %}</form>
+{% if not products %}<div class="card">No products found. Try a different search or category.</div>{% endif %}
+<div class="grid">{% for p in products %}<div class="card"><div class="emoji">{{ p.emoji }}</div><b>{{ p.name }}</b>
+<div class="muted">{{ p.category }} · {{ p.unit }}</div><div class="price">₹{{ p.price }}</div>
+{% if p.stock == 0 %}<span class="badge b-out">Out of stock</span>{% elif p.stock <= 5 %}<span class="badge b-low">Only {{ p.stock }} left</span>{% else %}<span class="badge b-ok">In stock</span>{% endif %}
+<form method="post" action="{{ url_for('cart_add') }}" style="margin-top:10px;display:flex;gap:6px"><input type="hidden" name="product_id" value="{{ p.id }}">
+<input name="qty" value="1" size="3" style="width:56px"><button class="btn" {{ 'disabled' if p.stock==0 }}>Add</button></form></div>{% endfor %}</div>{% endblock %}

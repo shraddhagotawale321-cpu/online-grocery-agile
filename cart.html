@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block body %}<h1>Your cart</h1>
+{% if not lines %}<div class="card">Your cart is empty. <a href="{{ url_for('index') }}">Start shopping</a></div>{% else %}
+<table><tr><th>Item</th><th>Price</th><th>Qty</th><th class="right">Total</th><th></th></tr>
+{% for l in lines %}<tr><td>{{ l.p.emoji }} {{ l.p.name }} <span class="muted">({{ l.p.unit }})</span></td><td>₹{{ l.p.price }}</td>
+<td><form method="post" action="{{ url_for('cart_update') }}" style="display:flex;gap:6px"><input type="hidden" name="product_id" value="{{ l.p.id }}">
+<input name="qty" value="{{ l.qty }}" size="3" style="width:56px"><button class="btn sec">Update</button></form></td>
+<td class="right">₹{{ l.line_total }}</td><td><form method="post" action="{{ url_for('cart_remove') }}"><input type="hidden" name="product_id" value="{{ l.p.id }}"><button class="btn red">Remove</button></form></td></tr>{% endfor %}</table>
+<div class="card" style="margin-top:14px;max-width:340px;margin-left:auto"><div>Subtotal: <b>₹{{ s.subtotal }}</b></div>
+<div>Delivery: <b>{{ '₹%d'|format(s.delivery_fee) if s.delivery_fee else 'FREE' }}</b></div>
+<div class="muted">Free delivery on orders of ₹300 or more</div><h2>Total: ₹{{ s.total }}</h2>
+<a class="btn" href="{{ url_for('checkout') }}">Proceed to checkout</a></div>{% endif %}{% endblock %}

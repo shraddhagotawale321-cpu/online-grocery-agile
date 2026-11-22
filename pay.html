@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% block body %}<h1>Payment for order #{{ order.id }}</h1>
+<div class="sim"><b>SIMULATED payment gateway</b> - no real money is charged.<br>Test values: card ending <b>0002</b> = declined, ending <b>9995</b> = insufficient funds, any other 16-digit card = success. UPI id starting with <b>fail</b> = declined, anything else valid (name@bank) = success.</div>
+<div class="card" style="max-width:520px"><h2>Amount: ₹{{ order.total }}</h2>
+<form method="post" novalidate><div class="field"><label>Payment method</label>
+<select name="method" id="m" onchange="t()"><option value="upi">UPI</option><option value="card">Debit / Credit card</option></select></div>
+<div id="upi"><div class="field"><label>UPI ID</label><input name="upi_id" placeholder="name@bank" size="28"></div></div>
+<div id="card" style="display:none"><div class="field"><label>Card number</label><input name="card_number" placeholder="4111 1111 1111 1111" size="28"></div>
+<div class="field"><label>Expiry (MM/YY)</label><input name="expiry" placeholder="12/29" size="8"> <label style="display:inline">CVV</label> <input name="cvv" size="4" maxlength="3" type="password"></div></div>
+<button class="btn">Pay ₹{{ order.total }}</button></form></div>
+<script>function t(){var c=document.getElementById('m').value=='card';document.getElementById('card').style.display=c?'block':'none';document.getElementById('upi').style.display=c?'none':'block'}</script>{% endblock %}

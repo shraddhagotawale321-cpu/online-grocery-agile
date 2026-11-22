@@ -1,0 +1,4 @@
+{% extends "base.html" %}{% block body %}<h1>Store staff (demo)</h1><div class="sim"><b>SIMULATED tracking:</b> advancing an order here stands in for a real rider/GPS update.</div>
+<table><tr><th>Order</th><th>Customer</th><th>Total</th><th>Payment</th><th>Status</th><th></th></tr>{% for o in orders %}<tr><td><a href="{{ url_for('order', order_id=o.id) }}">#{{ o.id }}</a></td><td>{{ o.customer_name }}</td><td>₹{{ o.total }}</td><td>{{ o.payment_status }}</td><td>{{ o.status }}</td>
+<td>{% if o.status in STATUS_FLOW and o.status != STATUS_FLOW[-1] %}<form method="post" action="{{ url_for('admin_advance', order_id=o.id) }}"><button class="btn">Move to {{ STATUS_FLOW[STATUS_FLOW.index(o.status)+1] }}</button></form>{% endif %}</td></tr>{% endfor %}</table>
+<h2>Low / out of stock</h2><table><tr><th>Product</th><th>Stock</th></tr>{% for p in low %}<tr><td>{{ p.name }}</td><td>{{ p.stock }}</td></tr>{% endfor %}</table>{% endblock %}
