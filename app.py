@@ -180,8 +180,8 @@ def create_app(db_path=None):
         cat = request.args.get("category", "").strip()
         sql, args = "SELECT * FROM products WHERE 1=1", []
         if q:
-            sql += " AND name LIKE ?"
-            args.append(f"%{q}%")
+            sql += " AND (name LIKE ? OR category LIKE ?)"
+            args.extend([f"%{q}%", f"%{q}%"])
         if cat:
             sql += " AND category = ?"
             args.append(cat)
