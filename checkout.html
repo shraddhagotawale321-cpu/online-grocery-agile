@@ -1,7 +1,7 @@
 {% extends "base.html" %}{% block body %}<h1>Checkout</h1><div class="cols"><div class="card"><h2>Delivery details</h2>
 <form method="post" novalidate>
 <div class="field"><label>Full name</label><input name="name" value="{{ data.name }}" size="32">{% if errors.name %}<div class="err">{{ errors.name }}</div>{% endif %}</div>
-<div class="field"><label>Mobile number</label><input name="phone" value="{{ data.phone }}" size="16" maxlength="10">{% if errors.phone %}<div class="err">{{ errors.phone }}</div>{% endif %}</div>
+<div class="field"><label>Mobile number</label><input name="phone" placeholder="e.g. 9876543210" value="{{ data.phone }}" size="16" maxlength="10">{% if errors.phone %}<div class="err">{{ errors.phone }}</div>{% endif %}</div>
 <div class="field"><label>Delivery address</label><textarea name="address" rows="3" cols="38">{{ data.address }}</textarea>{% if errors.address %}<div class="err">{{ errors.address }}</div>{% endif %}</div>
 <button class="btn">Continue to payment</button> <a class="btn sec" href="{{ url_for('cart') }}">Back to cart</a></form></div>
 <div class="card"><h2>Order summary</h2>{% for l in lines %}<div>{{ l.qty }} × {{ l.p.name }} <span style="float:right">₹{{ l.line_total }}</span></div>{% endfor %}<hr>
